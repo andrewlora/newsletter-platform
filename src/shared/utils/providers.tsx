@@ -6,7 +6,7 @@ interface ProviderProps {
   children: React.ReactNode;
 }
 
-export default function Providers({ children }: ProviderProps) {
+export function Providers({ children }: ProviderProps) {
   const pathname = usePathname();
   return (
     <NextUIProvider>
