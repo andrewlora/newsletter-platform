@@ -1,5 +1,6 @@
 import Header from "@/shared/widgets/header/header";
 import Banner from "./features/banner";
+import Benefits from "./features/benefits";
 import Branding from "./features/branding";
 
 const Home = () => {
@@ -8,6 +9,7 @@ const Home = () => {
       <Header />
       <Banner />
       <Branding />
+      <Benefits />
     </div>
   );
 };
