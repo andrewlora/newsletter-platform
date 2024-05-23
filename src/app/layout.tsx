@@ -3,6 +3,8 @@ import { Providers } from "@/shared/utils/providers";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 
+import { ClerkProvider } from "@clerk/nextjs";
+
 const clashDisplay = localFont({
   src: "../assets/fonts/ClashDisplay-Variable.ttf",
   variable: "--font-clashDisplay",
@@ -20,10 +22,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${clashDisplay.variable}`}>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${clashDisplay.variable}`}>
+          <Providers>{children}</Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
