@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
+import DashboardOverViewCard from "@/shared/components/cards/overview.card";
+
 const Main = () => {
   const { user } = useUser();
   const [copied, setCopied] = useState(false);
@@ -34,7 +36,10 @@ const Main = () => {
         Here&apos;s how your publication is doing
       </p>
       <div className="w-full flex">
-        <div className="w-[65%] min-h-[88vh] pr-5"></div>
+        <div className="w-[65%] min-h-[88vh] pr-5">
+          <br />
+          <DashboardOverViewCard />
+        </div>
         <div className="w-[35%] p-5">
           {/* create newsletter button */}
           <div className="w-full flex justify-end">
@@ -77,8 +82,8 @@ const Main = () => {
           <div className="w-full bg-white border rounded p-5 my-3">
             <h5 className="font-medium">Tutorials</h5>
             <p className="text-sm opacity-[.7]">
-              Learn how to get started on becodemy and utilize all our features,
-              directly from the becodemy team.
+              Learn how to get started on Submarine and utilize all our
+              features, directly from the Submarine team.
             </p>
             <br />
             <Button className="bg-[#FBCFE8] text-[#831743] rounded-lg h-[35px] flex items-center">
