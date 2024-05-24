@@ -3,7 +3,7 @@ import DashboardSideBar from "@/shared/widgets/dashboard/sidebar/dashboard.sideb
 import { useUser } from "@clerk/nextjs";
 import { NextUIProvider } from "@nextui-org/react";
 import { usePathname } from "next/navigation";
-
+import { Toaster } from "react-hot-toast";
 interface ProviderProps {
   children: React.ReactNode;
 }
@@ -30,6 +30,7 @@ export function Providers({ children }: ProviderProps) {
       ) : (
         <>{children}</>
       )}
+      <Toaster position="top-center" reverseOrder={false} />
     </NextUIProvider>
   );
 }

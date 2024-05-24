@@ -8,7 +8,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 
 import DashboardOverViewCard from "@/shared/components/cards/overview.card";
-
+import SubscribersChart from "@/shared/components/charts/subscribers.chart";
 const Main = () => {
   const { user } = useUser();
   const [copied, setCopied] = useState(false);
@@ -39,6 +39,8 @@ const Main = () => {
         <div className="w-[65%] min-h-[88vh] pr-5">
           <br />
           <DashboardOverViewCard />
+          <br />
+          <SubscribersChart />
         </div>
         <div className="w-[35%] p-5">
           {/* create newsletter button */}
