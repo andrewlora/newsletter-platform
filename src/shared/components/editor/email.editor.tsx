@@ -1,38 +1,44 @@
 "use client";
+import { GetEmailDetails } from "@/actions/get.email-details";
 import { saveEmail } from "@/actions/save.email";
 import { DefaultJsonData } from "@/assets/mails/default";
 import { useClerk } from "@clerk/nextjs";
 import { Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import EmailEditor, { EditorRef, EmailEditorProps } from "react-email-editor";
 import toast from "react-hot-toast";
 
 const EmailEdit = ({ subjectTitle }: { subjectTitle: string }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [jsonData, setJsonData] = useState<any | null>(DefaultJsonData);
   const { user } = useClerk();
   const emailEditorRef = useRef<EditorRef>(null);
   const history = useRouter();
 
-  const exportHtml = () => {
-    const unLayer = emailEditorRef.current?.editor;
+  useEffect(() => {
+    getEmailDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
-    unLayer?.exportHtml(async (data) => {
+  const exportHtml = () => {
+    const unlayer = emailEditorRef.current?.editor;
+
+    unlayer?.exportHtml(async (data) => {
       const { design, html } = data;
       setJsonData(design);
     });
   };
 
   const onReady: EmailEditorProps["onReady"] = () => {
-    const unLayer: any = emailEditorRef.current?.editor;
-    unLayer.loadDesign(jsonData);
+    const unlayer: any = emailEditorRef.current?.editor;
+    unlayer.loadDesign(jsonData);
   };
 
   const saveDraft = async () => {
-    const unLayer = emailEditorRef.current?.editor;
+    const unlayer = emailEditorRef.current?.editor;
 
-    unLayer?.exportHtml(async (data) => {
+    unlayer?.exportHtml(async (data) => {
       const { design } = data;
       await saveEmail({
         title: subjectTitle,
@@ -42,6 +48,18 @@ const EmailEdit = ({ subjectTitle }: { subjectTitle: string }) => {
         toast.success(res.message);
         history.push("/dashboard/write");
       });
+    });
+  };
+
+  const getEmailDetails = async () => {
+    await GetEmailDetails({
+      title: subjectTitle,
+      newsLetterOwnerId: user?.id!,
+    }).then((res: any) => {
+      if (res) {
+        setJsonData(JSON.parse(res?.content));
+      }
+      setLoading(false);
     });
   };
 

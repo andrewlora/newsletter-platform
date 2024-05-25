@@ -3,15 +3,20 @@
 import Email from "@/models/email.model";
 import { connectDb } from "@/shared/libs/db";
 
-export const getEmails = async ({
+export const GetEmailDetails = async ({
+  title,
   newsLetterOwnerId,
 }: {
+  title: string;
   newsLetterOwnerId: string;
 }) => {
   try {
     await connectDb();
-    const emails = await Email.find({ newsLetterOwnerId });
-    return JSON.parse(JSON.stringify(emails));
+    const email = await Email.findOne({
+      title,
+      newsLetterOwnerId,
+    });
+    return JSON.parse(JSON.stringify(email));
   } catch (error) {
     console.log(error);
   }
