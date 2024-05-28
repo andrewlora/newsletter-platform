@@ -2,6 +2,7 @@
 import { GetEmailDetails } from "@/actions/get.email-details";
 import { saveEmail } from "@/actions/save.email";
 import { DefaultJsonData } from "@/assets/mails/default";
+import { sendEmail } from "@/shared/utils/email.sender";
 import { useClerk } from "@clerk/nextjs";
 import { Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
@@ -27,6 +28,14 @@ const EmailEdit = ({ subjectTitle }: { subjectTitle: string }) => {
     unlayer?.exportHtml(async (data) => {
       const { design, html } = data;
       setJsonData(design);
+      await sendEmail({
+        userEmail: ["sponsorship@marinejs.com"],
+        subject: subjectTitle,
+        content: html,
+      }).then((res) => {
+        toast.success("Email sent successfully!");
+        history.push("/dashboard/write");
+      });
     });
   };
 
