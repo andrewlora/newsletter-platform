@@ -2,6 +2,7 @@
 
 import Subscriber from "@/models/subscriber.model";
 import { connectDb } from "@/shared/libs/db";
+import { validateEmail } from "@/shared/utils/zeroBounceApi";
 import { clerkClient } from "@clerk/nextjs/server";
 
 export const subscribe = async ({
@@ -35,10 +36,10 @@ export const subscribe = async ({
     }
 
     // Validate email
-    // const validationResponse = await validateEmail({ email });
-    // if (validationResponse.status === "invalid") {
-    //   return { error: "Email not valid!" };
-    // }
+    const validationResponse = await validateEmail({ email });
+    if (validationResponse.status === "invalid") {
+      return { error: "Email not valid!" };
+    }
 
     // Create new subscriber
     const subscriber = await Subscriber.create({

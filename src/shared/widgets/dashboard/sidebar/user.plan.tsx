@@ -45,7 +45,7 @@ const UserPlan = () => {
           ? "2500"
           : membershipData?.plan === "SCALE"
           ? "10,000"
-          : "1,00,000"}{" "}
+          : "100,000"}{" "}
         added
       </h6>
     </div>
